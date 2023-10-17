@@ -24,8 +24,8 @@ public class AuthTest {
     @Test
     void successAuthorizationWithRegistratedUser() {//успешная авторизация зарегистрированного клиента
         var registeredUser = getRegisteredAuthInfo("active");
-        $("[data-test-id=login] .input").setValue(registeredUser.getLogin());
-        $("[data-test-id=password] .input").setValue(registeredUser.getPassword());
+        $("[data-test-id=login] .input__control").setValue(registeredUser.getLogin());
+        $("[data-test-id=password] .input__control").setValue(registeredUser.getPassword());
         $("[data-test-id=action-login]").click();
         $("#root").shouldBe(visible)
                 .shouldHave(Condition.exactText("Личный кабинет"));
@@ -34,8 +34,8 @@ public class AuthTest {
     @Test
     void errorWithNotRegistratedUser() { //ошибка при отправке данных незарегистрированного клиента
         var notRegisteredUser = getAuthInfo("active");
-        $("[data-test-id=login] .input").setValue(notRegisteredUser.getLogin());
-        $("[data-test-id=password] .input").setValue(notRegisteredUser.getPassword());
+        $("[data-test-id=login] .input__control").setValue(notRegisteredUser.getLogin());
+        $("[data-test-id=password] .input__control").setValue(notRegisteredUser.getPassword());
         $("[data-test-id=action-login]").click();
         $("[data-test-id=error-notification] .notification__content")
                 .shouldHave(visible, Condition.text("Неверно указан логин или пароль"));
@@ -64,7 +64,7 @@ public class AuthTest {
     }
 
     @Test
-    void blockedUser() {
+    void blockedUser() { //заблокированный пользователь
         var blockedUser = getRegisteredAuthInfo("blocked");
         $("[data-test-id=login] .input__control").setValue(blockedUser.getLogin());
         $("[data-test-id=password] .input__control").setValue(blockedUser.getPassword());
